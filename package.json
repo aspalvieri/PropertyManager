@@ -1,0 +1,12 @@
+{
+  "name": "propertymanager",
+  "version": "0.0.1",
+  "description": "Property Management Tool",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "SET NODE_END=test&& mocha tests/index.test.js --exit"
+  },
+  "author": "Alex Spalvieri",
+  "license": "ISC"
+}
