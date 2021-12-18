@@ -29,7 +29,8 @@ class Dashboard extends Component {
         <div className="row valign-wrapper">
           <div className="col s12 center-align">
             <p className="flow-text">
-              <b>Logged in as:</b> {user.username}
+              <b>Logged in as:</b> {user.username}<br/>
+              <b>Role:</b> {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
             </p>
             <p className="flow-text grey-text text-darken-1">
               <small>(version: {config.VERSION})</small>

@@ -18,14 +18,15 @@ exports.register = (req, res) => {
   }
 
   
-  User.findOne({ username: req.body.email }).then(user =>{
+  User.findOne({ username: req.body.email }).then(user => {
     if (user) {
       return res.status(400).json({ email: "User already exists!" });
     }
     else {
       const newUser = new User({
         username: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        role: "tenant"
       });
       // Hash password before saving in database
       bcrypt.genSalt(10, (err, salt) => {
@@ -65,7 +66,8 @@ exports.login = (req, res) => {
           //Change values here to control what user object has on frontend
           id: user.id,
           //Username will be an email for managers
-          username: user.username
+          username: user.username,
+          role: user.role
         };
         // Sign token
         jwt.sign(payload, process.env.secret, {
