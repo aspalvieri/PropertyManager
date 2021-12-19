@@ -4,6 +4,7 @@ const expect = chai.expect;
 const { app } = require("../app");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Manager = require("../models/Manager");
 
 chai.use(chaiHttp);
 //Useful functions: before, beforeEach, after, afterEach
@@ -12,7 +13,9 @@ chai.use(chaiHttp);
 describe("/users", () => {
   before((done) => {
     User.deleteMany({}, (err) => {
-      done();
+      Manager.deleteMany({}, (err) => {
+        done();
+      });
     });
   });
   describe("POST /register", () => {
@@ -97,6 +100,7 @@ describe("/users", () => {
         expect(res.body.token.startsWith("Bearer ")).to.be.true;
         const user = jwt.verify(res.body.token.split(" ")[1], process.env.secret);
         expect(user.username).to.eq("test@test.com");
+        expect(user.roleUser.user_id).to.eq(user.id);
         done();
       });
     });

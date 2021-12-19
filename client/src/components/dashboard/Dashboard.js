@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { config } from "../../utils/configs";
 //import M from "materialize-css";
 
 class Dashboard extends Component {
@@ -24,6 +23,9 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.props.auth;
+    //For specific dashboards (IE: tenant gets less stuff:)
+    //if (user.role === 'ROLE') {  return (<Component /> );  }
+    //else (etc . . .) . . .
     return (
       <div className="container">
         <div className="row valign-wrapper">
@@ -31,9 +33,6 @@ class Dashboard extends Component {
             <p className="flow-text">
               <b>Logged in as:</b> {user.username}<br/>
               <b>Role:</b> {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
-            </p>
-            <p className="flow-text grey-text text-darken-1">
-              <small>(version: {config.VERSION})</small>
             </p>
             <button 
               style={{width: "150px", borderRadius: "3px", letterSpacing: "1.5px", marginTop: "1rem"}}

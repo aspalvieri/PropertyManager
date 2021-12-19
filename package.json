@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "SET NODE_ENV=test&& mocha tests/index.test.js --exit"
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "test": "SET NODE_ENV=test&& mocha tests/index.test.js --exit",
+    "query": "node query.js"
   },
   "author": "Alex Spalvieri",
   "license": "ISC",
