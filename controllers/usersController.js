@@ -10,21 +10,22 @@ const User = require("../models/User");
 const Manager = require("../models/Manager");
 const Landlord = require("../models/Landlord");
 const Tenant = require("../models/Tenant");
+const Property = require("../models/Property");
 
 const findRoleUser = async (id, role) => {
   if (role === "manager") {
-    return await Manager.findOne({ user_id: id });
+    return await Manager.findOne({ user_id: id }).populate("properties").catch(err => console.log(err));
   }
   else if (role === "landlord") {
-    return await Landlord.findOne({ user_id: id });
+    return await Landlord.findOne({ user_id: id }).catch(err => console.log(err));
   }
   else if (role === "tenant") {
-    return await Tenant.findOne({ user_id: id });
+    return await Tenant.findOne({ user_id: id }).catch(err => console.log(err));
   }
   else {
     return false;
   }
-}
+};
 
 exports.register = (req, res) => {
   // Form validation

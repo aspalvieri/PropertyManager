@@ -16,11 +16,9 @@ const UserSchema = new Schema({
     type: String,
     enum: ROLES,
     required: true
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
   }
+}, {
+  timestamps: true
 });
 
 module.exports = User = mongoose.model("users", UserSchema);

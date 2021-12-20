@@ -3,3 +3,6 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 
 export const USER_LOADING = "USER_LOADING";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+
+export const GET_PROPERTIES = "GET_PROPERTIES";
+export const CREATE_PROPERTY = "CREATE_PROPERTY";

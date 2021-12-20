@@ -6,11 +6,9 @@ const LandlordSchema = new Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "users"
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
   }
+}, {
+  timestamps: true
 });
 
 module.exports = Landlord = mongoose.model("landlords", LandlordSchema);

@@ -14,6 +14,8 @@ import PageNotFound from "./components/layout/404";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Logout from "./components/auth/Logout";
+import Loading from "./components/style/Loading";
+import Property from "./components/property/Property";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import { config } from "./utils/configs";
@@ -62,20 +64,9 @@ class App extends Component {
     if (loading) {
       return (
         <div className="App">
-          <div style={{position: "absolute", top: 0, left: 0, right: 0, bottom: 0, margin: "auto", width: "15em", height: "15em"}} 
-          className="preloader-wrapper active">
-            <div className="spinner-layer">
-              <div className="circle-clipper left">
-                <div style={{borderWidth: "12px"}} className="circle"></div>
-              </div><div className="gap-patch">
-                <div style={{borderWidth: "12px"}} className="circle"></div>
-              </div><div className="circle-clipper right">
-                <div style={{borderWidth: "12px"}} className="circle"></div>
-              </div>
-            </div>
-          </div>
+          <Loading />
         </div>
-      );
+      )
     }
 
     return (
@@ -89,6 +80,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/logout" component={Logout} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact path="/properties/:id" component={Property} />
               <Route path="*" component={PageNotFound} />
             </Switch>
             <Footer />

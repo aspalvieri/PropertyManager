@@ -7,10 +7,14 @@ const ManagerSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users"
   },
-  created_at: {
-    type: Date,
-    default: Date.now
-  }
+  properties: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "properties"
+    }
+  ]
+}, {
+  timestamps: true
 });
 
 module.exports = Manager = mongoose.model("managers", ManagerSchema);

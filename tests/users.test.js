@@ -5,6 +5,7 @@ const { app } = require("../app");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Manager = require("../models/Manager");
+const Property = require("../models/Property");
 
 chai.use(chaiHttp);
 //Useful functions: before, beforeEach, after, afterEach
@@ -14,7 +15,9 @@ describe("/users", () => {
   before((done) => {
     User.deleteMany({}, (err) => {
       Manager.deleteMany({}, (err) => {
-        done();
+        Property.deleteMany({}, (err) => {
+          done();
+        });
       });
     });
   });
@@ -102,6 +105,17 @@ describe("/users", () => {
         expect(user.username).to.eq("test@test.com");
         expect(user.roleUser.user_id).to.eq(user.id);
         done();
+        /*
+        Property.create({ name: "Test Property" }).then(prop => {
+          console.log(prop);
+          Manager.findOneAndUpdate({ user_id: user.id }, { "$push": { properties: prop.id } }, { new: true }).then(() => {
+            Manager.findOneAndUpdate({ user_id: user.id }, { "$push": { properties: prop.id } }, { new: true }).populate("properties").then(manager => {
+              console.log(manager);
+              done();
+            });
+          });
+        });
+        */
       });
     });
   });
