@@ -10,7 +10,7 @@ exports.getProperties = (req, res) => {
   if (req.user.role === "manager") {
     Manager.findOne({ user_id: req.user.id }).populate("properties").then(manager => {
       res.status(200).json(manager.properties);
-    });
+    }).catch(err => console.log(err));
   }
   else if (req.user.role === "landlord") {
     //ping landlord's manager and get properties from there

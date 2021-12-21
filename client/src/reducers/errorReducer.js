@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS, GET_ERRORS } from "../actions/types";
+import { CLEAR_ERRORS, GET_ERRORS, RESET_ALL_STATES } from "../actions/types";
 
 const initialState = {};
 
@@ -8,6 +8,8 @@ export default function errorReducers(state = initialState, action) {
       return action.payload;
     case CLEAR_ERRORS:
       return {};
+    case RESET_ALL_STATES:
+      return { ...initialState };
     default:
       return state;
   }

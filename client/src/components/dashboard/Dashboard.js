@@ -109,36 +109,40 @@ class Dashboard extends Component {
       return (
         <div className="container">
           <div className="row">
-            <div className="col s12 m6 center-align">
+            <div className="col s12 m5 center-align card">
               <p className="flow-text">
                 <b>Logged in as:</b> {user.username}<br/>
                 <b>Role:</b> {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
               </p>
-              <button 
-                style={{width: "150px", borderRadius: "3px", letterSpacing: "1.5px", marginTop: "1rem"}}
-                onClick={this.onLogoutClick} 
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              >
-                Logout
-              </button>
+              <div className="card-action">
+                <button 
+                  style={{width: "140px", borderRadius: "3px", letterSpacing: "1.5px" }}
+                  onClick={this.onLogoutClick} 
+                  className="btn waves-effect waves-light hoverable blue accent-3"
+                >
+                  Logout
+                </button>
+              </div>
             </div>
-            <div className="col s12 m6 center-align">
+            <div className="col s12 m6 offset-m1 center-align card">
               <table>
                 <thead>
                   <tr>
-                    <td className="center-align"><h4>Properties</h4></td>
+                    <td className="center-align"><h4><b>Properties</b></h4></td>
                   </tr>
                 </thead>
                 <tbody>
                   {properties.map(property => (
                     <tr key={property._id}>
-                      <td className="center-align"><Link to={`/properties/${property._id}`}>{property.name}</Link></td>
+                      <td className="center-align flow-text"><Link to={`/properties/${property._id}`}>{property.name}</Link></td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <button data-target="createProperty" style={{ borderRadius: "3px", letterSpacing: "1.5px", marginTop: "1rem" }}
-              className="waves-effect waves-light btn modal-trigger">Create Property</button>
+              <div className="card-action">
+                <button data-target="createProperty" style={{ borderRadius: "3px", letterSpacing: "1.5px" }}
+                className="waves-effect waves-light btn modal-trigger">Create Property</button>
+              </div>
             </div>
             {/* Create Property Modal */}
             <div id="createProperty" className="modal" style={{ maxWidth: "550px" }}>

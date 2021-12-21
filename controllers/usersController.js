@@ -64,7 +64,7 @@ exports.register = (req, res) => {
         });
       });
     }
-  });
+  }).catch(err => console.log(err));
 };
 
 exports.login = (req, res) => {
@@ -111,11 +111,11 @@ exports.login = (req, res) => {
               });
             }
           );
-        });
+        }).catch(err => console.log(err));
       } 
       else {
         return res.status(400).json({ passwordincorrect: "Password incorrect" });
       }
     });
-  });
+  }).catch(err => console.log(err));
 };

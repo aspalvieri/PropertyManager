@@ -1,4 +1,4 @@
-import { CREATE_PROPERTY, GET_PROPERTIES } from "../actions/types";
+import { CREATE_PROPERTY, GET_PROPERTIES, RESET_ALL_STATES } from "../actions/types";
 
 const initialState = {
   properties: []
@@ -16,6 +16,8 @@ export default function authReducers(state = initialState, action) {
         ...state,
         properties: [...state.properties, action.payload]
       };
+    case RESET_ALL_STATES:
+      return { ...initialState };
     default:
       return state;
   }

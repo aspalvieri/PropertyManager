@@ -3,7 +3,7 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { config } from "../utils/configs";
 
-import { GET_ERRORS, CLEAR_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
+import { GET_ERRORS, CLEAR_ERRORS, SET_CURRENT_USER, USER_LOADING, RESET_ALL_STATES } from "./types";
 
 // Register User
 export const registerUser = (userData, props) => dispatch => {
@@ -66,6 +66,7 @@ export const setUserLoading = value => {
 export const logoutUser = () => dispatch => {
   // Remove token from local storage
   localStorage.removeItem("jwtToken");
+  dispatch({ type: RESET_ALL_STATES });
   // Remove auth header for future requests
   setAuthToken(false);
   // Set current user to empty object {} which will set isAuthenticated to false

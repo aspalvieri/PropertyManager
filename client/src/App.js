@@ -3,9 +3,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { /*setCurrentUser,*/ logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
-import store from "./store";
+import buildStore from "./store";
+import { PersistGate } from 'redux-persist/integration/react'
 
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
@@ -20,9 +21,10 @@ import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import { config } from "./utils/configs";
 
-import "./scss/materialize.scss"; //materialize scss
 import "./scss/App.scss"; //App scss
 import "materialize-css"; //materialize js
+
+const { store, persistor } = buildStore();
 
 class App extends Component {
   state = {
@@ -45,7 +47,8 @@ class App extends Component {
       // Decode token and get user info and exp
       const decoded = jwt_decode(token);
       // Set user and isAuthenticated
-      store.dispatch(setCurrentUser(decoded));
+      //store.dispatch(setCurrentUser(decoded));
+      //console.log(decoded);
       // Check for expired token
       const currentTime = Date.now() / 1000; // to get in milliseconds
       if (decoded.exp < currentTime) {
@@ -71,21 +74,23 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <BrowserRouter>
-          <div className="App">
-            <Navbar />
-            <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <PrivateRoute exact path="/logout" component={Logout} />
-              <PrivateRoute exact path="/dashboard" component={Dashboard} />
-              <PrivateRoute exact path="/properties/:id" component={Property} />
-              <Route path="*" component={PageNotFound} />
-            </Switch>
-            <Footer />
-          </div>
-        </BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <div className="App">
+              <Navbar />
+              <Switch>
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <PrivateRoute exact path="/logout" component={Logout} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute exact path="/properties/:id" component={Property} />
+                <Route path="*" component={PageNotFound} />
+              </Switch>
+              <Footer />
+            </div>
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
     );
   }
