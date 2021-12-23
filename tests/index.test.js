@@ -2,4 +2,5 @@
 describe("/api", () => {
   require("./users.test");
   require("./properties.test");
+  require("./units.test");
 });

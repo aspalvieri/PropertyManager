@@ -23,7 +23,7 @@ exports.createProperty = (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  Property.create({ name: req.body.name }).then(property => {
+  Property.create({ name: req.body.name, manager_id: req.user.roleUser._id }).then(property => {
     Manager.findOneAndUpdate({ user_id: req.user.id }, { "$push": { properties: property.id } }, { new: true })/*.populate("properties")*/.then(manager => {
       res.status(200).json(property);
     }).catch(err => console.log(err));

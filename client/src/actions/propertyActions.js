@@ -12,9 +12,9 @@ export const getProperties = () => dispatch => {
       payload: properties
     });
   })
-  .catch(err => {
-    console.log(err);
-  });
+  .catch(err => 
+    console.log(err)
+  );
 }
 
 export const createProperty = userData => dispatch => {

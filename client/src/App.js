@@ -37,7 +37,7 @@ class App extends Component {
       if (!localStorage.VERSION || localStorage.VERSION !== config.VERSION) {
         localStorage.removeItem("VERSION");
         // Logout user
-        store.dispatch(logoutUser());
+        store.dispatch(logoutUser(persistor));
         // Redirect to login
         window.location.href = "./login";
       }
@@ -53,10 +53,14 @@ class App extends Component {
       const currentTime = Date.now() / 1000; // to get in milliseconds
       if (decoded.exp < currentTime) {
         // Logout user
-        store.dispatch(logoutUser());
+        store.dispatch(logoutUser(persistor));
         // Redirect to login
         window.location.href = "./login";
       }
+    }
+    //If the user doesn't have a token, purge persistor just to be safe
+    else {
+      persistor.purge();
     }
     this.setState({ loading: false });
   }

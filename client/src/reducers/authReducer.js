@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, USER_LOADING, CREATE_PROPERTY, GET_PROPERTIES, RESET_ALL_STATES } from "../actions/types";
+import { SET_CURRENT_USER, USER_LOADING, RESET_ALL_STATES } from "../actions/types";
 
 const isEmpty = require("is-empty");
 
@@ -15,28 +15,6 @@ export default function authReducers(state = initialState, action) {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload
-      };
-    case CREATE_PROPERTY:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          roleUser: {
-            ...state.user.roleUser,
-            properties: [...state.user.roleUser.properties, action.payload]
-          }
-        }
-      };
-    case GET_PROPERTIES:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          roleUser: {
-            ...state.user.roleUser,
-            properties: action.payload
-          }
-        }
       };
     case USER_LOADING:
       return {

@@ -1,4 +1,4 @@
-const VERSION = "0.0.2"; //Change this to force-log everyone
+const VERSION = "0.0.3"; //Change this to force-log everyone
 
 const configs = {
   test: {

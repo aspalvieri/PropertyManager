@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const TenantSchema = new Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users"
+    ref: "users",
+    required: true
   }
 }, {
   timestamps: true

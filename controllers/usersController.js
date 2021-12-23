@@ -14,7 +14,7 @@ const Property = require("../models/Property");
 
 const findRoleUser = async (id, role) => {
   if (role === "manager") {
-    return await Manager.findOne({ user_id: id }).populate("properties").catch(err => console.log(err));
+    return await Manager.findOne({ user_id: id }).catch(err => console.log(err));
   }
   else if (role === "landlord") {
     return await Landlord.findOne({ user_id: id }).catch(err => console.log(err));

@@ -7,4 +7,7 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const GET_PROPERTIES = "GET_PROPERTIES";
 export const CREATE_PROPERTY = "CREATE_PROPERTY";
 
+export const GET_UNITS = "GET_UNITS";
+export const CREATE_UNIT = "CREATE_UNIT";
+
 export const RESET_ALL_STATES = "RESET_ALL_STATES";

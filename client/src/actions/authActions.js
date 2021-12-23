@@ -63,7 +63,9 @@ export const setUserLoading = value => {
 };
 
 // Log user out
-export const logoutUser = () => dispatch => {
+export const logoutUser = (persistor) => dispatch => {
+  if (persistor)
+    persistor.purge();
   // Remove token from local storage
   localStorage.removeItem("jwtToken");
   dispatch({ type: RESET_ALL_STATES });

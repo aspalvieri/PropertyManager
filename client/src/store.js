@@ -9,7 +9,8 @@ const initialState = {};
 const middleware = [thunk];
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
+  blacklist: ["errors"],
   storage,
 }
  

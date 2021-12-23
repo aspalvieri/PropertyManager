@@ -12,7 +12,7 @@ class Logout extends Component {
   }
 
   componentDidMount() {
-    this.props.logoutUser();
+    this.props.logoutUser(null);
   }
 
   render() {

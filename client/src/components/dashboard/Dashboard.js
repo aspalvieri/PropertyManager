@@ -65,7 +65,7 @@ class Dashboard extends Component {
     if (prevState.loading !== this.state.loading) {
       let elems = document.querySelectorAll('.modal');
       let modals = M.Modal.init(elems);
-      this.setState({ propertyModal: this.findModal("createProperty", modals) })
+      this.setState({ propertyModal: this.findModal("createProperty", modals) });
     }
   }
 
@@ -88,7 +88,7 @@ class Dashboard extends Component {
 
   onLogoutClick = e => {
     e.preventDefault();
-    this.props.logoutUser();
+    this.props.logoutUser(null);
   };
 
   onChange = e => {
