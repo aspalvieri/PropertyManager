@@ -12,9 +12,10 @@ export const getProperties = () => dispatch => {
       payload: properties
     });
   })
-  .catch(err => 
-    console.log(err)
-  );
+  .catch(err => {
+    //We'll want to push to dashboard once we separate properties from dashboard
+    console.log(err);
+  });
 }
 
 export const createProperty = userData => dispatch => {

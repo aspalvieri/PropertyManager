@@ -3,7 +3,7 @@ import { config } from "../utils/configs";
 
 import { GET_UNITS, CREATE_UNIT, GET_ERRORS, CLEAR_ERRORS } from "./types";
 
-export const getUnits = property_id => dispatch => {
+export const getUnits = (property_id, history) => dispatch => {
   axios.get(`${config.SERVER_URI}/api/units`, { 
     params: {
       id: property_id 
@@ -16,9 +16,11 @@ export const getUnits = property_id => dispatch => {
       payload: units
     });
   })
-  .catch(err => 
-    console.log(err)
-  );
+  .catch(err => {
+    //Possible errors include units/property not being found
+    console.log(err);
+    history.push("/dashboard");
+  });
 }
 
 export const createUnit = userData => dispatch => {

@@ -32,7 +32,7 @@ class Property extends Component {
       if (p._id === this.props.match.params.id) {
         found = true;
         this.setState({ property: p });
-        this.props.getUnits(p._id);
+        this.props.getUnits(p._id, this.props.history);
       }
     }
     if (!found) {
