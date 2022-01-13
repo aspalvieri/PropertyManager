@@ -30,7 +30,7 @@ exports.createUnit = (req, res) => {
     return res.status(400).json(errors);
   }
   Unit.create({ property_id: req.body.id, name: req.body.name }).then(unit => {
-    Property.findOneAndUpdate({ _id: req.body.id, manager_id: req.user.roleUser._id }, { "$push": { units: unit.id } }, { new: true })/*.populate("properties")*/.then(property => {
+    Property.updateOne({ _id: req.body.id, manager_id: req.user.roleUser._id }, { "$push": { units: unit.id } }/*, { new: true }*/)/*.populate("properties")*/.then(() => {
       res.status(200).json(unit);
     }).catch(err => console.log(err));
   }).catch(err => console.log(err));

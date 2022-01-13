@@ -51,16 +51,12 @@ exports.register = (req, res) => {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
-          newUser.password = hash;
-            User.create(newUser)
-              .then(user => {
-                Manager.create({ user_id: user.id })
-                  .then(manager => {
-                    res.json(user);
-                  })
-                  .catch(err => console.log(err));
-              })
-              .catch(err => console.log(err));
+            newUser.password = hash;
+          User.create(newUser).then(user => {
+            Manager.create({ user_id: user.id }).then(manager => {
+              res.json(user);
+            }).catch(err => console.log(err));
+          }).catch(err => console.log(err));
         });
       });
     }
