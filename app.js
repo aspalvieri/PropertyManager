@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-//const sslRedirect = require('heroku-ssl-redirect').default;
+const sslRedirect = require('heroku-ssl-redirect').default;
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -14,11 +14,12 @@ require("./models/User")
 const app = express();
 
 //Heroku HTTPS redirect
-//app.use(sslRedirect());
+app.use(sslRedirect());
 
 var allowedOrigins = [
   "http://localhost:3000",
-  "http://192.168.0.15:3000"
+  "http://192.168.0.15:3000",
+  "https://aspalpropman.herokuapp.com"
 ];
 app.use(cors({
   origin: function(origin, callback){
