@@ -9,8 +9,8 @@ import M from "materialize-css";
 import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       //Page loading
       loading: true,

@@ -7,8 +7,8 @@ import classnames from "classnames";
 import queryString from 'query-string';
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",

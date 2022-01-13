@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 
 class Logout extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       
     }

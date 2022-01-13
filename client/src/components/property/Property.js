@@ -8,8 +8,8 @@ import Loading from "../style/Loading";
 import M from "materialize-css";
 
 class Property extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       loading: true,
       property: [],
