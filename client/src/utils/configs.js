@@ -11,7 +11,7 @@ const configs = {
     VERSION
   },
   production: {
-    SERVER_URI: "http://localhost:5000",
+    SERVER_URI: "https://aspalpropman.herokuapp.com",
     VERSION
   },
 };
