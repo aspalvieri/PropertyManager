@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { getProperties, createProperty } from "../../actions/propertyActions";
+import { getProperties, createProperty, deleteProperty, updateProperty } from "../../actions/propertyActions";
 import classnames from "classnames";
 import Loading from "../style/Loading";
 import M from "materialize-css";
@@ -19,7 +19,12 @@ class Dashboard extends Component {
       properties: [],
       errors: {},
       propertyName: "",
-      propertyModal: null
+      propertyID: null,
+      propertyModal: null,
+      deleteName: "",
+      deleteID: null,
+      deleteModal: null,
+      updateModal: null
     }
   }
 
@@ -60,12 +65,18 @@ class Dashboard extends Component {
         this.setState({ propertyName: "" });
         this.state.propertyModal.close();
       }
+      if (this.state.updateModal !== null) {
+        this.setState({ propertyName: "" });
+        this.state.updateModal.close();
+      }
     }
     //Finished loading 
     if (prevState.loading !== this.state.loading) {
       let elems = document.querySelectorAll('.modal');
       let modals = M.Modal.init(elems);
       this.setState({ propertyModal: this.findModal("createProperty", modals) });
+      this.setState({ deleteModal: this.findModal("deleteProperty", modals) });
+      this.setState({ updateModal: this.findModal("updateProperty", modals) });
     }
   }
 
@@ -85,6 +96,33 @@ class Dashboard extends Component {
     this.setState({ load: true });
     this.props.createProperty(userData);
   };
+
+  onUpdateProperty = e => {
+    e.preventDefault();
+    const userData = {
+      id: this.state.propertyID,
+      name: this.state.propertyName
+    };
+    this.setState({ load: true });
+    this.props.updateProperty(userData);
+  }
+
+  deleteProperty = id => {
+    this.props.deleteProperty(id);
+    this.state.deleteModal.close();
+  }
+
+  modalDeleteProperty = (id, name) => {
+    this.setState({ deleteID: id, deleteName: name });
+  }
+
+  modalupdateProperty = (id, name) => {
+    this.setState({ propertyID: id, propertyName: name });
+  }
+
+  modalCreateProperty = e => {
+    this.setState({ propertyName: "" });
+  }
 
   onLogoutClick = e => {
     e.preventDefault();
@@ -129,22 +167,30 @@ class Dashboard extends Component {
                 <thead>
                   <tr>
                     <td className="center-align"><h4><b>Properties</b></h4></td>
+                    <td className="">&nbsp;</td>
                   </tr>
                 </thead>
                 <tbody>
                   {properties.map(property => (
                     <tr key={property._id}>
                       <td className="center-align flow-text"><Link to={`/properties/${property._id}`}>{property.name}</Link></td>
+                      <td>
+                        <button className="waves-effect waves-light hoverable btn modal-trigger" data-target="updateProperty" style={{ marginRight: "10px" }}
+                        onClick={() => this.modalupdateProperty(property._id, property.name)}>
+                        <i className="material-icons">edit</i></button>
+                        <button className="waves-effect waves-light hoverable btn red accent-2 modal-trigger" data-target="deleteProperty"
+                        onClick={() => this.modalDeleteProperty(property._id, property.name)}><i className="material-icons">delete</i></button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
               <div className="card-action">
                 <button data-target="createProperty" style={{ borderRadius: "3px", letterSpacing: "1.5px" }}
-                className="waves-effect waves-light btn modal-trigger">Create Property</button>
+                className="waves-effect waves-light btn modal-trigger" onClick={this.modalCreateProperty}>Create Property</button>
               </div>
             </div>
-            {/* Create Property Modal */}
+            {/* CREATE Property Modal */}
             <div id="createProperty" className="modal" style={{ maxWidth: "550px" }}>
               <div className="modal-content">
                 <h4><b>Create</b> Property</h4><br/>
@@ -190,6 +236,62 @@ class Dashboard extends Component {
                 <a href="#!" className="modal-close waves-effect waves-green btn-flat">CANCEL</a>
               </div>
             </div>
+            {/* DELETE Property Modal */}
+            <div id="deleteProperty" className="modal" style={{ maxWidth: "550px" }}>
+              <div className="modal-content">
+                <h4><b>Delete</b> Property</h4>
+                <p className="flow-text">Are you sure you wish to delete <b>{this.state.deleteName}</b>?</p>
+                <button className="waves-effect waves-light hoverable btn red accent-2" 
+                style={{ marginRight: "25px" }} onClick={() => this.deleteProperty(this.state.deleteID)}>DELETE</button>
+                <a href="#!" className="modal-close waves-effect waves-light hoverable btn">CANCEL</a>
+              </div>
+            </div>
+            {/* UPDATE Property Modal */}
+            <div id="updateProperty" className="modal" style={{ maxWidth: "550px" }}>
+            <div className="modal-content">
+                <h4><b>Update</b> Property</h4><br/>
+                <form noValidate onSubmit={this.onUpdateProperty}>
+                  <div className="input-field s12">
+                    <input
+                      disabled={this.state.load ? "disabled" : ""}
+                      onChange={this.onChange}
+                      value={this.state.propertyName}
+                      error={errors.name}
+                      autoComplete="name"
+                      id="propertyName"
+                      type="text"
+                      className={classnames("", {
+                        invalid: errors.name
+                      })}
+                    />
+                    <label htmlFor="propertyName">Property Name</label>
+                    <span className="red-text">
+                      {errors.name}
+                    </span>
+                    
+                  </div>
+                  <div className="s12" style={{ paddingLeft: "11.250px" }}>
+                  <button
+                    disabled={this.state.load ? "disabled" : ""}
+                    style={{
+                      width: "140px",
+                      height: "42px",
+                      borderRadius: "3px",
+                      letterSpacing: "1.5px",
+                      marginTop: "1rem"
+                    }}
+                    type="submit"
+                    className="btn waves-effect waves-light hoverable blue accent-3"
+                  >
+                    Update
+                  </button>
+                  </div>
+                </form>
+              </div>
+              <div className="modal-footer">
+                <a href="#!" className="modal-close waves-effect waves-green btn-flat">CANCEL</a>
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -222,6 +324,8 @@ Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   getProperties: PropTypes.func.isRequired,
   createProperty: PropTypes.func.isRequired,
+  deleteProperty: PropTypes.func.isRequired,
+  updateProperty: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   properties: PropTypes.object.isRequired
@@ -235,5 +339,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, getProperties, createProperty }
+  { logoutUser, getProperties, createProperty, deleteProperty, updateProperty }
 )(Dashboard);

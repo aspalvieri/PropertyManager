@@ -21,10 +21,10 @@ const buildStore = () => {
     persistedReducer,
     initialState,
     compose(
-      applyMiddleware(...middleware),
+      applyMiddleware(...middleware)/*,
       (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()) ||
-        compose
+        compose*/
     )
   );
   let persistor = persistStore(store);

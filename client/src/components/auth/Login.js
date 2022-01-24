@@ -53,7 +53,7 @@ class Login extends Component {
     this.props.loginUser(userData);
   };
 
-  userRegistered(registered) {
+  userRegistered = (registered) => {
     if (registered === "true")
       return (
         <h5 style={{ padding: "10px", borderRadius: "5px", textAlign: "center" }}
